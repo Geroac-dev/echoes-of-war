@@ -1,0 +1,6 @@
+const views = [
+    
+
+];
+
+export { views };
