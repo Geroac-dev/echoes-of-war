@@ -1,0 +1,20 @@
+{
+    "name" : "Echoes of war",
+    "short_name": "EoW" ,
+    "description": "Pagina web del aclamado videojuego Echoes of war (patente pendiente)",
+    "start_url":"/",
+    "scope" : "/",
+    "display" : "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "orientation": "portrait-primary",
+    "lang": "es-mx",
+    "icons" : [
+        {
+            "src": "/images/logo.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

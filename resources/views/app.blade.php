@@ -5,14 +5,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>{{ config('app.name', 'D-luna') }}</title>
+    <title>{{ config('app.name', 'Echoes of war') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/GG-2.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/logo.png')}}">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
     <meta name="theme-color" content="#FFF">
 
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link rel="manifest" href="{{asset('manifest.webmanifest')}}">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="EchoesOfWar">
+    <link rel="apple-touch-icon" href="{{asset('images/logo.png')}}">
     <style>
         body {
             background-color: #F9FAFF !important;
@@ -86,7 +92,7 @@
         z-index:9999;
         flex-direction: column;
     ">
-        <h1>Logo?</h1>
+        <img src="/images/logo.png" style="width: min(80vw, 500px); height: auto; margin-bottom: 20px;">
         <div class="loader"></div>
     </div>
     <div id="app">
@@ -99,6 +105,19 @@
             loader.classList.add('hide');
             setTimeout(() => loader.remove(), 500);
         });
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                .then((registro) => {
+                    console.log('Service worker registrado:', registro.scope);
+                })
+                .catch((error) => {
+                    console.error('Error al registrar el service worker:', error);
+                });
+            });
+        }
     </script>
 </body>
 

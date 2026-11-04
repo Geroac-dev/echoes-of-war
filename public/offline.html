@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            *{
+                box-sizing: border-box;
+            }
+            body{
+                min-height: 100vh;
+                margin: 0;
+                padding: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: Arial;
+                text-align: center;
+                color: #333333;
+                background-color: #f4f4f4;
+            }
+            .mensaje{
+                width: 100%;
+                max-width: 500px;
+                padding: 40px 25px;
+                border-radius: 15px;
+                background-color: #ffffff;
+            }
+            h1{
+                color: #006b5b;
+            }
+            button{
+                padding: 12px 20px;
+                border: none;
+                border-radius: 8px;
+                color: #ffffff;
+                background-color: #006b5b;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <main class="mensaje">
+            <h1>
+                Sin conexión a internet.
+            </h1>
+            <p>
+                No podemos obtener información en este momento
+            </p>
+            <p>
+                Puedes consultar paginas guardadas en tu dispositivo
+            </p>
+            <button onclick="window.location.reload()">
+                Intentar nuevamente
+            </button>
+        </main>
+    </body>
+</html>

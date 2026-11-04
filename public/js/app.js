@@ -26084,12 +26084,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($setup.mdAndDown ? 'ml-1' : 'ml-10')
           }, {
             "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-              return _cache[7] || (_cache[7] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", null, "Logo?", -1 /* HOISTED */)]);
+              return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+                src: "/images/logo.png",
+                style: {
+                  "width": "64px"
+                },
+                draggable: false,
+                onContextmenu: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["prevent"]))
+              }, null, 32 /* NEED_HYDRATION */)];
             }),
             _: 1 /* STABLE */
           }, 8 /* PROPS */, ["class"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_spacer), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_app_bar_nav_icon, {
             variant: "text",
-            onClick: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+            onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
               return _ctx.drawer = !_ctx.drawer;
             }, ["stop"]))
           })];
@@ -26124,7 +26131,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         _: 1 /* STABLE */
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_snackbar, {
         modelValue: _ctx.snackbar,
-        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return _ctx.snackbar = $event;
         }),
         color: _ctx.color,
@@ -26136,7 +26143,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         _: 1 /* STABLE */
       }, 8 /* PROPS */, ["modelValue", "color"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_navigation_drawer, {
         modelValue: _ctx.drawer,
-        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+        "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
           return _ctx.drawer = $event;
         }),
         location: "right",
@@ -26151,7 +26158,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
                   return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_list, {
                     opened: _ctx.admin,
-                    "onUpdate:opened": _cache[4] || (_cache[4] = function ($event) {
+                    "onUpdate:opened": _cache[5] || (_cache[5] = function ($event) {
                       return _ctx.admin = $event;
                     })
                   }, {
@@ -26179,7 +26186,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                           })) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_v_list_item, {
                             key: "logout",
                             title: "Cerrar Sesión",
-                            onClick: _cache[3] || (_cache[3] = function ($event) {
+                            onClick: _cache[4] || (_cache[4] = function ($event) {
                               return $options.logout();
                             })
                           }))];
@@ -26200,7 +26207,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_switch, {
                     "class": "ml-8",
                     modelValue: _ctx.darkMode,
-                    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+                    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
                       return _ctx.darkMode = $event;
                     }),
                     inset: "",
@@ -26216,7 +26223,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_list, {
             opened: _ctx.cate,
-            "onUpdate:opened": _cache[2] || (_cache[2] = function ($event) {
+            "onUpdate:opened": _cache[3] || (_cache[3] = function ($event) {
               return _ctx.cate = $event;
             })
           }, {
@@ -28475,7 +28482,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "flex-column d-flex justify-center align-center"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return _cache[6] || (_cache[6] = [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", null, "Logo?", -1 /* HOISTED */)]);
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+            src: "/images/logo.png",
+            draggable: false,
+            onContextmenu: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["prevent"]))
+          }, null, 32 /* NEED_HYDRATION */)];
         }),
         _: 1 /* STABLE */
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_card_text, null, {
@@ -28489,14 +28500,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_text_field, {
                     ref: "user",
                     modelValue: $data.user,
-                    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+                    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
                       return $data.user = $event;
                     }),
                     autofocus: "",
                     type: "user",
                     autocomplete: "false",
                     label: "Usuario",
-                    onKeyup: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function ($event) {
+                    onKeyup: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function ($event) {
                       return _ctx.$refs.pass.focus();
                     }, ["enter"]))
                   }, null, 8 /* PROPS */, ["modelValue"])];
@@ -28508,18 +28519,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
                   return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_text_field, {
                     modelValue: $data.pass,
-                    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+                    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
                       return $data.pass = $event;
                     }),
                     ref: "pass",
                     label: "Contraseña",
                     autocomplete: "false",
-                    "onClick:appendInner": _cache[3] || (_cache[3] = function ($event) {
+                    "onClick:appendInner": _cache[4] || (_cache[4] = function ($event) {
                       return $data.show = !$data.show;
                     }),
                     type: $data.show ? 'text' : 'password',
                     "append-inner-icon": $data.show ? 'mdi-eye' : 'mdi-eye-off',
-                    onKeyup: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function ($event) {
+                    onKeyup: _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function ($event) {
                       return $options.login();
                     }, ["enter"]))
                   }, null, 8 /* PROPS */, ["modelValue", "type", "append-inner-icon"])];
@@ -28544,7 +28555,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               }, {
                 "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
                   return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_btn, {
-                    onClick: _cache[5] || (_cache[5] = function ($event) {
+                    onClick: _cache[6] || (_cache[6] = function ($event) {
                       return $options.login();
                     }),
                     color: "primary",

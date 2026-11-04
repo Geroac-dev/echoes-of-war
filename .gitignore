@@ -4,5 +4,8 @@ public/*
 !public/js/
 !public/css/
 !public/mix-manifest.json
+!public/manifest.webmanifest
+!public/offline.html
+!public/sw.js
 storage/logs/laravel.log
 storage/app

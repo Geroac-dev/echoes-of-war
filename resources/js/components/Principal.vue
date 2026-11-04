@@ -2,7 +2,7 @@
     <v-app>
         <v-app-bar color="primary">
             <v-btn text href="/" to="/" icon size="x-large" :class="mdAndDown?'ml-1':'ml-10'">
-                <h1>Logo?</h1>
+                <img src="/images/logo.png" style="width: 64px;" :draggable="false" @contextmenu.prevent>
             </v-btn>
             <v-spacer/>
             <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer" />
