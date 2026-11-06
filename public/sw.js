@@ -5,6 +5,7 @@ const ARCHIVOS_INICIALES = [
     '/offline.html',
     '/manifest.webmanifest',
     '/images/logo.png',
+    '/images/ECHOS OF WAR.png',
 ];
 // 1. Instalar y guardar los archivos iniciales
 self.addEventListener('install', (event) => {
@@ -53,20 +54,16 @@ self.addEventListener('fetch', (event) => {
     }
     // Para CSS, JavaScript e imágenes: caché primero
     event.respondWith(
-        caches.match(event.request).then((respuestaGuardada) => {
-            if (respuestaGuardada) {
-                return respuestaGuardada;
-            }
-            return fetch(event.request).then((respuestaInternet) => {
-                if (!respuestaInternet || respuestaInternet.status !== 200) {
-                    return respuestaInternet;
-                }
+        fetch(event.request)
+            .then((respuestaInternet) => {
                 const copia = respuestaInternet.clone();
                 caches.open(CACHE_NAME).then((cache) => {
                     cache.put(event.request, copia);
                 });
                 return respuestaInternet;
-            });
-        })
+            })
+            .catch(async () => {
+                return await caches.match(event.request);
+            })
     );
 });

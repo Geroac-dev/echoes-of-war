@@ -35,11 +35,7 @@
 						</p>
 					</v-card-text>
 					<v-card-actions class="justify-center pb-6">
-						<v-btn color="primary" large class="mr-3" href="/wiki">
-							<v-icon left>mdi-book-open-page-variant</v-icon>
-							Ver Wiki
-						</v-btn>
-						<v-btn outlined color="primary" large href="/downloads/app.apk" download>
+						<v-btn outlined color="primary" large href="/storage/EchosOfWar.apk" download="EchosOfWar.apk">
 							<v-icon left>mdi-download</v-icon>
 							Descargar App
 						</v-btn>

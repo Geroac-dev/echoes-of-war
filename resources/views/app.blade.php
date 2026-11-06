@@ -92,7 +92,7 @@
         z-index:9999;
         flex-direction: column;
     ">
-        <img src="/images/logo.png" style="width: min(80vw, 500px); height: auto; margin-bottom: 20px;">
+        <img src="/images/ECHOS OF WAR.png" style="width: min(80vw, 500px); height: auto; margin-bottom: 20px;">
         <div class="loader"></div>
     </div>
     <div id="app">
@@ -110,12 +110,12 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
-                .then((registro) => {
-                    console.log('Service worker registrado:', registro.scope);
-                })
-                .catch((error) => {
-                    console.error('Error al registrar el service worker:', error);
-                });
+                    .then((registro) => {
+                        console.log('Service worker registrado:', registro.scope);
+                    })
+                    .catch((error) => {
+                        console.error('Error al registrar el service worker:', error);
+                    });
             });
         }
     </script>
