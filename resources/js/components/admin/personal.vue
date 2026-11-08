@@ -3,7 +3,7 @@
         <v-row>
             <v-col cols="8">
                 <h1>
-                    Personal
+                    {{ $t('personal') }}
                 </h1>
             </v-col>
             <v-col cols="4" align="right">
@@ -21,7 +21,7 @@
                                 <v-icon>
                                     mdi-account-plus
                                 </v-icon>
-                                Añadir
+                                {{ $t('add') }}
                             </v-list-item-title>
                         </v-list-item>
                     </v-list>
@@ -32,7 +32,7 @@
                     :items="personal"
                     :loading="loading"
                     :headers="headers"
-                    >
+                >
                     <template v-slot:item.actions="{ item }">
                         <v-menu>
                             <template v-slot:activator="{props}">
@@ -48,7 +48,7 @@
                                         <v-icon>
                                             mdi-pencil
                                         </v-icon>
-                                        Editar
+                                        {{ $t('edit') }}
                                     </v-list-item-title>
                                 </v-list-item>
                                 <v-list-item @click="showDeleteDialog(item)">
@@ -56,7 +56,7 @@
                                         <v-icon>
                                             mdi-trash-can-outline
                                         </v-icon>
-                                        Eliminar
+                                        {{ $t('delete') }}
                                     </v-list-item-title>
                                 </v-list-item>
                             </v-list>
@@ -68,7 +68,7 @@
         <v-dialog persistent v-model="personalDialog" max-width="900">
             <v-card>
                 <v-card-title align="center" class="bg-primary">
-                        {{ !selectedPersonal.id ? "Añadir" : "Editar" }} personal
+                        {{ !selectedPersonal.id ? $t('add') : $t('edit') }} personal
                         <br v-if="mdAndDown">
                         <v-btn icon="mdi-close" variant="text" @click="personalDialog=false" />
                 </v-card-title>
@@ -123,7 +123,7 @@
                                     />
                                 </template>
                                 <template v-else>
-                                    Guardar
+                                    {{ $t('save') }}
                                 </template>
                             </v-btn>
                         </v-col>
@@ -137,12 +137,12 @@
                     <v-row>
                         <v-col cols="12">
                             <v-alert variant="tonal" color="warning" icon="$warning"
-                                :title="'¿Esta seguro de que desea eliminar a '+selectedPersonal.name+'?'" />
+                                :title="$t('confirmDelete')+selectedPersonal.name+'?'" />
                         </v-col>
                         <v-col cols="12" md="6" align="center">
                             <v-btn variant="outlined" color="primary" @click="deleteDialog = false" block
                                 size="x-large">
-                                Cancelar
+                                {{ $t('cancel') }}
                             </v-btn>
                         </v-col>
                         <v-col cols="12" md="6" align="center">
@@ -151,7 +151,7 @@
                                     <v-progress-circular indeterminate />
                                 </template>
                                 <template v-else>
-                                    Eliminar
+                                    {{ $t('delete') }}
                                 </template>
                             </v-btn>
                         </v-col>
@@ -181,10 +181,10 @@ export default {
             deleteDialog: false,
             personal: [],
             headers: [
-                { title: 'Nombre', key: 'name'},
-                { title: 'Usuario', key: 'user'},
+                { title: this.$t('name'), key: 'name'},
+                { title: this.$t('user'), key: 'user'},
                 { title: 'Email', key: 'email' },
-                { title: 'Acciones', key: 'actions'}
+                { title: this.$t('actions'), key: 'actions'}
             ],
             selectedPersonal: {},
             errormsg: null,
@@ -194,6 +194,7 @@ export default {
     },
     methods: {
         getPersonal() {
+            this.loading = true;
             axios.post("/get-users").then(({ data }) => {
                 if (data.status == 200) {
                     this.personal = data.users;
@@ -213,19 +214,19 @@ export default {
             if (!this.loading) {
                 this.loading = true;
                 if (!this.selectedPersonal.name) {
-                    this.errormsg = "Llene el campo nombre.";
+                    this.errormsg = $t('fillField')+"nombre.";
                     this.$refs.name.focus();
                     this.loading = false;
                 } else if (!this.selectedPersonal.user) {
-                    this.errormsg = "Llene el campo usuario.";
+                    this.errormsg = $t('fillField')+"usuario.";
                     this.$refs.user.focus();
                     this.loading = false;
                 } else if (!this.selectedPersonal.id && !this.pass) {
-                    this.errormsg = "Llene el campo contraseña.";
+                    this.errormsg = $t('fillField')+"contraseña.";
                     this.$refs.name.focus();
                     this.loading = false;
                 } else if (!this.selectedPersonal.email) {
-                    this.errormsg = "Llene el campo email.";
+                    this.errormsg = $t('fillField')+"email.";
                     this.$refs.email.focus();
                     this.loading = false;
                 } else {
@@ -250,13 +251,14 @@ export default {
                             this.selectedPersonal = {};
                             this.pass = null;
                             this.personalDialog = false;
+                            this.getPersonal();
                         } else if (data.status == 501) {
                             this.errormsg = "El nombre de usuario ya se encuentra en uso.";
+                            this.loading = false;
                         } else {
-                            this.errormsg = "Ha ocurrido un error, si el error persiste, contacte con soporte ;)";
+                            this.errormsg = $t('errorMsg');
+                            this.loading = false;
                         }
-                        this.getPersonal();
-                        this.loading = false;
                     });
                 }
             }
@@ -278,9 +280,9 @@ export default {
                         this.deleteDialog = false;
                         this.getPersonal();
                     } else {
-                        this.errormsg = "Ha ocurrido un error, si el error persiste, contacte con soporte ;)";
+                        this.errormsg = $t('errorMsg');
+                        this.loading = false;
                     }
-                    this.loading = false;
                 });
                 
             }

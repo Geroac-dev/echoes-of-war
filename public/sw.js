@@ -33,6 +33,10 @@ self.addEventListener('fetch', (event) => {
     if (event.request.method !== 'GET') {
         return;
     }
+    const url = new URL(event.request.url);
+    if (!url.protocol.startsWith('http')) {
+        return; // Deja que el navegador maneje estas peticiones de forma nativa sin meterlas al caché
+    }
     // Para las páginas: Internet primero y caché después
     if (event.request.mode === 'navigate') {
         event.respondWith(

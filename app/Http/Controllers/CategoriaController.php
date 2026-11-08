@@ -36,7 +36,9 @@ class CategoriaController extends Controller
         try {
             $this->fbCreate('categorias', [
                 "nombre" => $request->input("nombre"),
+                "name" => $request->input("name"),
                 "descripcion" => $request->input("descripcion"),
+                "description" => $request->input("description"),
                 "orden" => (int) $request->input("orden"),
             ]);
             return response()->json(['status' => '200']);
@@ -52,7 +54,9 @@ class CategoriaController extends Controller
             // Para editar en Firestore vía API REST, hacemos un PATCH o recreamos el documento
             $this->fbUpdate('categorias', $id, [
                 "nombre" => $request->input("nombre"),
+                "name" => $request->input("name"),
                 "descripcion" => $request->input("descripcion"),
+                "description" => $request->input("description"),
                 "orden" => (int) $request->input("orden"),
             ]);
             return response()->json(['status' => '200']);
@@ -102,7 +106,9 @@ class CategoriaController extends Controller
             $this->fbCreate('contenidos', [
                 "categoria_id" => $request->input("categoria_id"),
                 "nombre" => $request->input("nombre"),
+                "name" => $request->input("name"),
                 "descripcion" => $request->input("descripcion"),
+                "description" => $request->input("description"),
                 "orden" => (int) $request->input("orden"),
                 "slug" => $request->input("slug"),
                 "imagen" => $imagen
@@ -120,7 +126,9 @@ class CategoriaController extends Controller
             $id = $request->input("id");
             $data = [
                 "nombre" => $request->input("nombre"),
+                "name" => $request->input("name"),
                 "descripcion" => $request->input("descripcion"),
+                "description" => $request->input("description"),
                 "orden" => (int) $request->input("orden"),
                 "slug" => $request->input("slug"),
             ];
@@ -195,7 +203,9 @@ class CategoriaController extends Controller
             $seccionId = $this->fbCreateWithId('secciones', [
                 "contenido_id" => $request->input("contenido_id"),
                 "titulo" => $request->input("titulo"),
+                "title" => $request->input("title"),
                 "texto" => $request->input("texto"),
+                "text" => $request->input("text"),
                 "posicion" => (int) $request->input("posicion"),
                 "orden" => (int) $request->input("orden"),
             ]);

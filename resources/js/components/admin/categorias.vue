@@ -3,7 +3,7 @@
         <v-row>
             <v-col cols="8">
                 <h1>
-                    Categorias
+                    {{ $t('categories') }}
                 </h1>
             </v-col>
             <v-col cols="4" align="right">
@@ -21,7 +21,7 @@
                                 <v-icon>
                                     mdi-folder-multiple-plus
                                 </v-icon>
-                                Añadir
+                                {{ $t('add') }}
                             </v-list-item-title>
                         </v-list-item>
                     </v-list>
@@ -49,7 +49,7 @@
                                 <template v-slot:item.imagen="{ item }">
                                     <v-img :src="'/storage/'+item.imagen" height="50" @click="imagen=item.imagen;imagenDialog=true" v-if="!!item.imagen"/>
                                     <template v-else>
-                                        Sin imagen
+                                        {{ $t('imageless') }}
                                     </template>
                                 </template>
                                     <template v-slot:item.descripcion="{ item }">
@@ -70,7 +70,8 @@
                                                     <v-icon>
                                                         mdi-animation-outline
                                                     </v-icon>
-                                                    Secciones
+                                                    {{ $t('sections') }}
+                                                    
                                                 </v-list-item-title>
                                             </v-list-item>
                                             <v-list-item @click="showEditContenidoDialog(item)">
@@ -78,7 +79,7 @@
                                                     <v-icon>
                                                         mdi-pencil
                                                     </v-icon>
-                                                    Editar
+                                                    {{ $t('edit') }}
                                                 </v-list-item-title>
                                             </v-list-item>
                                             <v-list-item @click="showDeleteContenidoDialog(item)">
@@ -86,7 +87,7 @@
                                                     <v-icon>
                                                         mdi-trash-can-outline
                                                     </v-icon>
-                                                    Eliminar
+                                                    {{ $t('delete') }}
                                                 </v-list-item-title>
                                             </v-list-item>
                                         </v-list>
@@ -94,7 +95,7 @@
                                 </template>
                             </v-data-table>
                             <h4 v-else>
-                                No hay datos disponibles.
+                                {{ $t('dataless') }}
                             </h4>
                         </td>
                     </template>
@@ -116,7 +117,7 @@
                                         <v-icon>
                                             mdi-folder-multiple-plus
                                         </v-icon>
-                                        Nuevo Contenido
+                                        {{ $t('new') }} {{ $t('content') }}
                                     </v-list-item-title>
                                 </v-list-item>
                                 <v-list-item @click="showEditDialog(item)">
@@ -124,7 +125,7 @@
                                         <v-icon>
                                             mdi-pencil
                                         </v-icon>
-                                        Editar
+                                        {{ $t('edit') }}
                                     </v-list-item-title>
                                 </v-list-item>
                                 <v-list-item @click="showDeleteDialog(item)">
@@ -132,7 +133,7 @@
                                         <v-icon>
                                             mdi-trash-can-outline
                                         </v-icon>
-                                        Eliminar
+                                        {{ $t('delete') }}
                                     </v-list-item-title>
                                 </v-list-item>
                             </v-list>
@@ -144,13 +145,13 @@
         <v-dialog persistent v-model="categoriaDialog" max-width="900">
             <v-card>
                 <v-card-title align="center" class="bg-primary">
-                        {{ !selectedcategoria.id ? "Añadir" : "Editar" }} categoria
+                        {{ !selectedcategoria.id ? $t('add') : $t('edit') }} {{ $t('categories') }}
                         <br v-if="mdAndDown">
                         <v-btn icon="mdi-close" variant="text" @click="categoriaDialog=false" />
                 </v-card-title>
                 <v-card-text>
                     <v-row>
-                        <v-col cols="12" align="center">
+                        <v-col cols="6" align="center">
                             <v-text-field
                                 ref="nombre"
                                 v-model="selectedcategoria.nombre"
@@ -158,7 +159,15 @@
                                 prepend-inner-icon="mdi-text-short"
                             />
                         </v-col>
-                        <v-col cols="12" align="center">
+                        <v-col cols="6" align="center">
+                            <v-text-field
+                                ref="name"
+                                v-model="selectedcategoria.name"
+                                label="Name"
+                                prepend-inner-icon="mdi-text-short"
+                            />
+                        </v-col>
+                        <v-col cols="6" align="center">
                             <v-textarea
                                 ref="descripcion"
                                 v-model="selectedcategoria.descripcion"
@@ -166,11 +175,19 @@
                                 prepend-inner-icon="mdi-text"
                             />
                         </v-col>
+                        <v-col cols="6" align="center">
+                            <v-textarea
+                                ref="description"
+                                v-model="selectedcategoria.description"
+                                label="Description"
+                                prepend-inner-icon="mdi-text"
+                            />
+                        </v-col>
                         <v-col cols="12" align="center">
                             <v-text-field
                                 ref="orden"
                                 v-model="selectedcategoria.orden"
-                                label="Orden"
+                                :label="$t('order')"
                                 type="number"
                                 prepend-inner-icon="mdi-filter-variant"
                             />
@@ -188,7 +205,7 @@
                                     />
                                 </template>
                                 <template v-else>
-                                    Guardar
+                                    {{ $t('save') }}                                    
                                 </template>
                             </v-btn>
                         </v-col>
@@ -199,26 +216,44 @@
         <v-dialog persistent v-model="addContenidoDialog" max-width="900">
             <v-card>
                 <v-card-title align="center" class="bg-primary">
-                        {{ !selectedcontenido.id ? "Añadir" : "Editar" }} categoria
+                        {{ !selectedcontenido.id ? $t('add') : $t('edit') }} {{ $t('') }}
                         <br v-if="mdAndDown">
                         <v-btn icon="mdi-close" variant="text" @click="addContenidoDialog=false" />
                 </v-card-title>
                 <v-card-text>
                     <v-row>
-                        <v-col cols="12" align="center">
+                        <v-col cols="6" align="center">
                             <v-text-field
                                 ref="nombre"
                                 v-model="selectedcontenido.nombre"
                                 label="Nombre"
                                 prepend-inner-icon="mdi-text-short"
+                                v-on:keyup.enter="$refs.name.focus()"
+                            />
+                        </v-col>
+                        <v-col cols="6" align="center">
+                            <v-text-field
+                                ref="name"
+                                v-model="selectedcontenido.name"
+                                label="Name"
+                                prepend-inner-icon="mdi-text-short"
                                 v-on:keyup.enter="$refs.descripcion.focus()"
                             />
                         </v-col>
-                        <v-col cols="12" align="center">
+                        <v-col cols="6" align="center">
                             <v-textarea
                                 ref="descripcion"
                                 v-model="selectedcontenido.descripcion"
                                 label="Descripcion"
+                                prepend-inner-icon="mdi-text"
+                                v-on:keyup.enter="$refs.description.focus()"
+                            />
+                        </v-col>
+                        <v-col cols="6" align="center">
+                            <v-textarea
+                                ref="description"
+                                v-model="selectedcontenido.description"
+                                label="Description"
                                 prepend-inner-icon="mdi-text"
                                 v-on:keyup.enter="$refs.user.focus()"
                             />
@@ -227,7 +262,7 @@
                             <v-text-field
                                 ref="orden"
                                 v-model="selectedcontenido.orden"
-                                label="Orden"
+                                :label="$t('order')"
                                 type="number"
                                 prepend-inner-icon="mdi-filter-variant"
                                 v-on:keyup.enter="$refs.slug.focus()"
@@ -258,7 +293,7 @@
                                     />
                                 </template>
                                 <template v-else>
-                                    Guardar
+                                    {{ $t('save') }}
                                 </template>
                             </v-btn>
                         </v-col>
@@ -272,12 +307,12 @@
                     <v-row>
                         <v-col cols="12">
                             <v-alert variant="tonal" color="warning" icon="$warning"
-                                :title="'¿Esta seguro de que desea eliminar a '+selectedcategoria.nombre+'?'" />
+                                :title="$t('confirmDelete')+selectedcategoria.nombre+'?'" />
                         </v-col>
                         <v-col cols="12" md="6" align="center">
                             <v-btn variant="outlined" color="primary" @click="deleteDialog = false" block
                                 size="x-large">
-                                Cancelar
+                                {{ $t('cancel') }}
                             </v-btn>
                         </v-col>
                         <v-col cols="12" md="6" align="center">
@@ -286,7 +321,7 @@
                                     <v-progress-circular indeterminate />
                                 </template>
                                 <template v-else>
-                                    Eliminar
+                                    {{ $t('delete') }}
                                 </template>
                             </v-btn>
                         </v-col>
@@ -300,12 +335,12 @@
                     <v-row>
                         <v-col cols="12">
                             <v-alert variant="tonal" color="warning" icon="$warning"
-                                :title="'¿Esta seguro de que desea eliminar a '+selectedcontenido.nombre+'?'" />
+                                :title="$t('confirmDelete')+selectedcontenido.nombre+'?'" />
                         </v-col>
                         <v-col cols="12" md="6" align="center">
                             <v-btn variant="outlined" color="primary" @click="deleteContenidoDialog = false" block
                                 size="x-large">
-                                Cancelar
+                                {{ $t('cancel') }}
                             </v-btn>
                         </v-col>
                         <v-col cols="12" md="6" align="center">
@@ -314,7 +349,7 @@
                                     <v-progress-circular indeterminate />
                                 </template>
                                 <template v-else>
-                                    Eliminar
+                                    {{ $t('delete') }}
                                 </template>
                             </v-btn>
                         </v-col>
@@ -325,7 +360,7 @@
         <v-dialog v-model="imagenDialog">
             <v-card>
                 <v-card-title align="center" class="bg-primary">
-                        Imagen
+                        {{ $t('image') }}
                         <br v-if="mdAndDown">
                         <v-btn icon="mdi-close" variant="text" @click="imagenDialog=false" />
                 </v-card-title>
@@ -341,7 +376,7 @@
         <v-dialog persistent v-model="contenidoDialog" fullscreen>
             <v-card>
                 <v-card-title align="center" class="bg-primary">
-                        Contenido
+                        {{ $t('content') }}
                         <br v-if="mdAndDown">
                         <v-btn icon="mdi-close" variant="text" @click="contenidoDialog=false" />
                 </v-card-title>
@@ -356,7 +391,6 @@
         </v-dialog>
     </v-layout>
 </template>
-
 <script>
 import { mapState } from "vuex";
 import { useDisplay } from 'vuetify';
@@ -381,16 +415,16 @@ export default {
             imagen: null,
             categorias: [],
             headers: [
-                { title: 'Nombre', key: 'nombre'},
-                { title: 'Descripcion', key: 'descripcion'},
-                { title: 'Acciones', key: 'actions'}
+                { title: this.$t('name'), key: 'nombre'},
+                { title: this.$t('desc'), key: 'descripcion'},
+                { title: this.$t('actions'), key: 'actions'}
             ],
             headersContenidos: [
-                { title: 'Nombre', key: 'nombre'},
-                { title: 'Descripcion', key: 'descripcion'},
+                { title: this.$t('name'), key: 'nombre'},
+                { title: this.$t('desc'), key: 'descripcion'},
                 { title: 'Slug', key: 'slug'},
-                { title: 'Imagen', key: 'imagen'},
-                { title: 'Acciones', key: 'actions'}
+                { title: this.$t('image'), key: 'imagen'},
+                { title: this.$t('actions'), key: 'actions'}
             ],
             selectedcategoria: {},
             selectedcontenido: {},
@@ -400,6 +434,7 @@ export default {
     },
     methods: {
         getCategorias() {
+            this.loading = true;
             axios.post("/get-categorias").then(({ data }) => {
                 if (data.status == 200) {
                     this.categorias = data.categorias;
@@ -431,15 +466,15 @@ export default {
             if (!this.loading) {
                 this.loading = true;
                 if (!this.selectedcategoria.nombre) {
-                    this.errormsg = "Llene el campo nombre.";
+                    this.errormsg = $t('fillField')+"nombre.";
                     this.$refs.name.focus();
                     this.loading = false;
                 } else if (!this.selectedcategoria.descripcion) {
-                    this.errormsg = "Llene el campo descripcion.";
+                    this.errormsg = $t('fillField')+"descripcion.";
                     this.$refs.descripcion.focus();
                     this.loading = false;
                 } else if (!this.selectedcategoria.orden) {
-                    this.errormsg = "Llene el campo orden.";
+                    this.errormsg = $t('fillField')+"orden.";
                     this.$refs.orden.focus();
                     this.loading = false;
                 } else {
@@ -455,19 +490,23 @@ export default {
                     axios.post(route, {
                         id: id,
                         nombre: this.selectedcategoria.nombre,
+                        name: this.selectedcategoria.name,
                         descripcion: this.selectedcategoria.descripcion,
+                        description: this.selectedcategoria.description,
                         orden: this.selectedcategoria.orden,
                     }).then(({ data }) => {
                         if (data.status == 200) {
                             this.$store.dispatch("snackbar/setSnackbar", {text: !this.selectedcategoria.id ? "categoria añadido correctamente." : "categoria editado correctamente.", color:"success"});
                             this.selectedcategoria = {};
                             this.categoriaDialog = false;
+                            this.getCategorias();
                         } else if (data.status == 501) {
                             this.errormsg = "El nombre de usuario ya se encuentra en uso.";
+                            this.loading = false;
                         } else {
-                            this.errormsg = "Ha ocurrido un error, si el error persiste, contacte con soporte ;)";
+                            this.errormsg = $t('errorMsg');
+                            this.loading = false;
                         }
-                        this.getCategorias();
                     });
                 }
             }
@@ -476,19 +515,19 @@ export default {
             if (!this.loading) {
                 this.loading = true;
                 if (!this.selectedcontenido.nombre) {
-                    this.errormsg = "Llene el campo nombre.";
+                    this.errormsg = $t('fillField')+"nombre.";
                     this.$refs.name.focus();
                     this.loading = false;
                 } else if (!this.selectedcontenido.descripcion) {
-                    this.errormsg = "Llene el campo descripcion.";
+                    this.errormsg = $t('fillField')+"descripcion.";
                     this.$refs.descripcion.focus();
                     this.loading = false;
                 } else if (!this.selectedcontenido.orden) {
-                    this.errormsg = "Llene el campo orden.";
+                    this.errormsg = $t('fillField')+"orden.";
                     this.$refs.orden.focus();
                     this.loading = false;
                 } else if (!this.selectedcontenido.slug) {
-                    this.errormsg = "Llene el campo slug.";
+                    this.errormsg = $t('fillField')+"slug.";
                     this.$refs.slug.focus();
                     this.loading = false;
                 } else {
@@ -517,12 +556,14 @@ export default {
                             this.selectedcontenido = {};
                             this.selectedcategoria = {};
                             this.addContenidoDialog = false;
+                            this.getCategorias();
                         } else if (data.status == 501) {
                             this.errormsg = "El nombre de usuario ya se encuentra en uso.";
+                            this.loading = false;
                         } else {
-                            this.errormsg = "Ha ocurrido un error, si el error persiste, contacte con soporte ;)";
+                            this.errormsg = $t('errorMsg');
+                            this.loading = false;
                         }
-                        this.getCategorias();
                     });
                 }
             }
@@ -548,9 +589,9 @@ export default {
                         this.deleteDialog = false;
                         this.getCategorias();
                     } else {
-                        this.errormsg = "Ha ocurrido un error, si el error persiste, contacte con soporte ;)";
+                        this.errormsg = $t('errorMsg');
+                        this.loading = false;
                     }
-                    this.loading = false;
                 });
                 
             }
@@ -568,9 +609,9 @@ export default {
                         this.deleteContenidoDialog = false;
                         this.getCategorias();
                     } else {
-                        this.errormsg = "Ha ocurrido un error, si el error persiste, contacte con soporte ;)";
+                        this.errormsg = $t('errorMsg');
+                        this.loading = false;
                     }
-                    this.loading = false;
                 });
                 
             }

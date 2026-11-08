@@ -26,12 +26,12 @@
             <v-list v-model:opened="cate">
                 <v-list-group :value="categoria.id" v-for="categoria in categorias" :key="categoria.id">
                     <template v-slot:activator="{ props }">
-                        <v-list-item v-bind="props" :title="categoria.nombre" />
+                        <v-list-item v-bind="props" :title="locale === 'en' ? categoria.name : categoria.nombre" />
                     </template>
                     <v-list-item 
                         v-for="contenido in categoria.contenidos"
                         :key="contenido.id"
-                        :title="contenido.nombre"
+                        :title="locale === 'en' ? contenido.name : contenido.nombre"
                         :href="'/ver/'+contenido.slug"
                         :to="'/ver/'+contenido.slug"
                     />
@@ -43,7 +43,7 @@
                         <v-list v-model:opened="admin">
                             <v-list-group value="Administrar">
                                     <template v-slot:activator="{ props }">
-                                        <v-list-item v-bind="props" title="Administrar" />
+                                        <v-list-item v-bind="props" :title="$t('admin')" />
                                     </template>
                                     <v-list-item 
                                         v-if="!!user"
@@ -55,104 +55,128 @@
                                     <v-list-item 
                                         v-if="!user"
                                         key="login"
-                                        title="Iniciar Sesión"
+                                        :title="$t('login')"
                                         href="/iniciar-sesion"
                                         to="/iniciar-sesion"
                                     />
                                     <v-list-item 
                                         v-else
                                         key="logout"
-                                        title="Cerrar Sesión"
+                                        :title="$t('logout')"
                                         @click="logout()"
                                     />
                             </v-list-group>
                         </v-list>
                     </v-col>
-                    <template v-if="!!user">
-                        <v-divider />
-                        <v-col cols="12">
-                            <v-switch
+                    <v-divider />
+                    <v-col cols="12" v-if="!!user">
+                        <v-switch
                             class="ml-8"
                             v-model="darkMode"
                             inset
-                            :label="darkMode ? 'Modo claro' : 'Modo oscuro'"
-                            />
-                        </v-col>
-                    </template>
+                            false-icon="mdi-white-balance-sunny"
+                            true-icon="mdi-weather-night"
+                        />
+                    </v-col>
+                    <v-col cols="12">
+                        <v-switch
+                            v-model="idiomaSwitch"
+                            :label="idiomaSwitch ? 'English' : 'Español'"
+                            inset
+                            class="ml-8"
+                            @change="cambiarIdioma"
+                        />
+                    </v-col>
                 </v-row>
             </template>
         </v-navigation-drawer>
     </v-app>
 </template>
 <script>
-import { mapState } from "vuex";
-import { useDisplay } from 'vuetify';
-import { useTheme } from 'vuetify';
+    import { mapState } from "vuex";
+    import { useDisplay } from 'vuetify';
+    import { useTheme } from 'vuetify';
+    import { useI18n } from 'vue-i18n';
+    import { ref, onMounted } from 'vue';
 
-export default {
-    setup() {
-        const { mdAndDown } = useDisplay();
-        return { mdAndDown };
-    },
-    mounted() {
-        this.$store.dispatch("users/setUser");
-        this.theme = useTheme();
-        this.getCategorias();
-    },
-    data: () => ({
-        darkMode: false,
-        theme: null,
-        drawer: false,
-        admin: [],
-        categorias: [],
-        cate: [],
-        vistas: [],
-    }),
-    methods: {
-        logout() {
-            this.axios.post("/logout");
+    export default {
+        setup() {
+            const { mdAndDown } = useDisplay();
+            const { locale } = useI18n();
+            
+            const idiomaGuardado = localStorage.getItem('idioma');
+            if (idiomaGuardado) {
+                locale.value = idiomaGuardado;
+            }
+            const idiomaSwitch = ref(locale.value === 'en');
+
+            return { mdAndDown, locale, idiomaSwitch };
+        },
+        mounted() {
             this.$store.dispatch("users/setUser");
-            this.$router.push("/");
-            this.drawer = false;
+            this.theme = useTheme();
+            this.getCategorias();
         },
-        getCategorias() {
-            axios.post("/get-categorias").then(({ data }) => {
-                if (data.status == 200) {
-                    this.categorias = data.categorias;
-                }
-                this.loading = false;
-            });
-        },
-    },
-    watch: {
-        darkMode(val) {
-            if (this.theme) {
-                if (val) {
-                    this.theme.change('dark');
-                } else {
-                    this.theme.change('light');
-                }
-                if (!!this.user) {
-                    axios.post("/change-theme", { theme: val });
-                }
-            }
-        },
-        user(val) {
-            if (!!val) {
-                this.darkMode = !!val.dark_mode;
-                this.getCategorias();
-            }
-        }
-    },
-    computed: {
-        ...mapState({
-            user: state => state.users.user,
-            snackbar: state => state.snackbar.snackbar,
-            color: state => state.snackbar.color,
-            text: state => state.snackbar.text
+        data: () => ({
+            darkMode: false,
+            theme: null,
+            drawer: false,
+            admin: [],
+            categorias: [],
+            cate: [],
+            vistas: []
         }),
-    },
-};
+        methods: {
+            logout() {
+                this.axios.post("/logout")
+                .then(({ data }) => {
+                    this.$store.dispatch("users/setUser");
+                    this.$router.push("/");
+                    this.drawer = false;
+                });
+            },
+            getCategorias() {
+                axios.post("/get-categorias").then(({ data }) => {
+                    if (data.status == 200) {
+                        this.categorias = data.categorias;
+                    }
+                    this.loading = false;
+                });
+            },
+            cambiarIdioma() {
+                this.locale = this.idiomaSwitch ? 'en' : 'es';
+                localStorage.setItem('idioma', this.locale);
+            }
+        },
+        watch: {
+            darkMode(val) {
+                if (this.theme) {
+                    if (val) {
+                        this.theme.change('dark');
+                    } else {
+                        this.theme.change('light');
+                    }
+                    if (!!this.user) {
+                        axios.post("/change-theme", { theme: val });
+                    }
+                }
+            },
+            user(val) {
+                if (!!val) {
+                    this.darkMode = !!val.dark_mode;
+                    this.getCategorias();
+                }
+            }
+        },
+        computed: {
+            ...mapState({
+                user: state => state.users.user,
+                snackbar: state => state.snackbar.snackbar,
+                color: state => state.snackbar.color,
+                text: state => state.snackbar.text
+            }),
+        },
+    };
 </script>
 <style>
     .v-application {

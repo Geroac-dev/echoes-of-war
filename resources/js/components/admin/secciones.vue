@@ -7,12 +7,12 @@
 						<v-row>
 							<v-col cols="12">
 								<h1>
-									{{ contenido.nombre }}
+									{{ locale === 'en' ? contenido.name : contenido.nombre }}
 								</h1>
 							</v-col>
 							<v-col cols="12">
 								<h4 class="text-wrap">
-									{{ contenido.descripcion }}
+									{{ locale === 'en' ? contenido.description : contenido.descripcion }}
 								</h4>
 							</v-col>
 						</v-row>
@@ -23,22 +23,22 @@
 						<v-row>
 							<v-col cols="12">
 								<v-btn @click="addSeccion(1)" color="primary" block size="x-large">
-									Agregar sección
+									{{ $t('add') }} {{ $t('sections') }}
 								</v-btn>
 							</v-col>
 							<template v-for="seccion in izquierda" :key="seccion.id">
 								<v-col cols="12" md="6">
 									<h2>
-										{{ seccion.titulo }}
+										{{ locale === 'en' ? seccion.title : seccion.titulo }}
 									</h2>
 								</v-col>
 								<v-col cols="12" md="6">
 									<v-btn color="primary" block size="x-large" @click="editarSeccion(seccion)">
-										Editar
+										{{ $t('edit') }}
 									</v-btn>
 								</v-col>
 								<v-col cols="12" align="left">
-									<span class="text-pre-wrap">{{ seccion.texto }}</span>
+									<span class="text-pre-wrap">{{ locale === 'en' ? seccion.text : seccion.texto }}</span>
 								</v-col>
 								<v-col cols="12" v-if="seccion.imagenes.length > 0">
 									<v-slide-group
@@ -79,22 +79,22 @@
 						<v-row>
 							<v-col cols="12">
 								<v-btn @click="addSeccion(2)" color="primary" block size="x-large">
-									Agregar sección
+									{{ $t('add') }} {{ $t('sections') }} 
 								</v-btn>
 							</v-col>
 							<template v-for="seccion in derecha" :key="seccion.id">
 								<v-col cols="12" md="6">
 									<h2>
-										{{ seccion.titulo }}
+										{{ locale === 'en' ? seccion.title : seccion.titulo }}
 									</h2>
 								</v-col>
 								<v-col cols="12" md="6">
 									<v-btn color="primary" block size="x-large" @click="editarSeccion(seccion)">
-										Editar
+										{{ $t('edit') }}
 									</v-btn>
 								</v-col>
 								<v-col cols="12" align="left">
-									<span class="text-pre-wrap">{{ seccion.texto }}</span>
+									<span class="text-pre-wrap">{{ locale === 'en' ? seccion.text : seccion.texto }}</span>
 								</v-col>
 								<v-col cols="12" v-if="seccion.imagenes.length > 0">
 									<v-slide-group
@@ -130,22 +130,22 @@
 						<v-row>
 							<v-col cols="12">
 								<v-btn @click="addSeccion(3)" color="primary" block size="x-large">
-									Agregar sección
+									{{ $t('add') }} {{ $t('sections') }} 
 								</v-btn>
 							</v-col>
 							<template v-for="seccion in centro" :key="seccion.id">
 								<v-col cols="12" md="6">
 									<h2>
-										{{ seccion.titulo }}
+										{{ locale === 'en' ? seccion.title : seccion.titulo }}
 									</h2>
 								</v-col>
 								<v-col cols="12" md="6">
 									<v-btn color="primary" block size="x-large" @click="editarSeccion(seccion)">
-										Editar
+										{{ $t('edit') }}
 									</v-btn>
 								</v-col>
 								<v-col cols="12" align="left">
-									<span class="text-pre-wrap">{{ seccion.texto }}</span>
+									<span class="text-pre-wrap">{{ locale === 'en' ? seccion.text : seccion.texto }}</span>
 								</v-col>
 								<v-col cols="12" v-if="seccion.imagenes.length > 0">
 									<v-slide-group
@@ -179,16 +179,24 @@
 		<v-dialog persistent v-model="addSeccionDialog" max-width="900">
             <v-card>
                 <v-card-title align="center" class="bg-primary">
-                        {{ !selectedseccion.id ? "Añadir" : "Editar" }} sección
+                        {{ !selectedseccion.id ? $t('add') : $t('edit') }} sección
                         <v-btn icon="mdi-close" variant="text" @click="addSeccionDialog=false" />
                 </v-card-title>
                 <v-card-text>
                     <v-row>
-                        <v-col cols="12" align="center">
+                        <v-col cols="6" align="center">
                             <v-text-field
                                 ref="titulo"
                                 v-model="selectedseccion.titulo"
                                 label="Titulo"
+                                prepend-inner-icon="mdi-text-short"
+                            />
+                        </v-col>
+						<v-col cols="6" align="center">
+                            <v-text-field
+                                ref="title"
+                                v-model="selectedseccion.title"
+                                label="Title"
                                 prepend-inner-icon="mdi-text-short"
                             />
                         </v-col>
@@ -197,6 +205,14 @@
                                 ref="texto"
                                 v-model="selectedseccion.texto"
                                 label="Texto"
+                                prepend-inner-icon="mdi-text"
+                            />
+                        </v-col>
+						<v-col cols="12" align="center">
+                            <v-textarea
+                                ref="text"
+                                v-model="selectedseccion.text"
+                                label="Text"
                                 prepend-inner-icon="mdi-text"
                             />
                         </v-col>
@@ -225,7 +241,7 @@
                                     />
                                 </template>
                                 <template v-else>
-                                    Guardar
+									{{ $t('save') }}
                                 </template>
                             </v-btn>
                         </v-col>
@@ -236,7 +252,7 @@
 		<v-dialog v-model="imagenDialog">
             <v-card>
                 <v-card-title align="center" class="bg-primary">
-                        Imagen
+						{{ $t('image') }}
                         <br v-if="mdAndDown">
                         <v-btn icon="mdi-close" variant="text" @click="imagenDialog=false" />
                 </v-card-title>
@@ -275,6 +291,7 @@ export default {
 	methods: 
 	{
 		getSecciones() {
+			this.loading = true;
 			axios.post("/get-secciones", {
 				contenido_id: this.contenido.id
 			}).then(({ data }) => {
@@ -294,15 +311,15 @@ export default {
             if (!this.loading) {
                 this.loading = true;
                 if (!this.selectedseccion.titulo) {
-                    this.errormsg = "Llene el campo titulo.";
+                    this.errormsg = $t('fillField')+"titulo.";
                     this.$refs.titulo.focus();
                     this.loading = false;
                 } else if (!this.selectedseccion.texto) {
-                    this.errormsg = "Llene el campo texto.";
+                    this.errormsg = $t('fillField')+"texto.";
                     this.$refs.texto.focus();
                     this.loading = false;
                 } else if (!this.selectedseccion.orden) {
-                    this.errormsg = "Llene el campo orden.";
+                    this.errormsg = $t('fillField')+"orden.";
                     this.$refs.orden.focus();
                     this.loading = false;
 				} else {
@@ -333,12 +350,14 @@ export default {
 							this.selectedseccion = {};
 							this.files = [];
                             this.addSeccionDialog = false;
+							this.getSecciones();
                         } else if (data.status == 501) {
                             this.errormsg = "El nombre de usuario ya se encuentra en uso.";
+                    		this.loading = false;
                         } else {
-                            this.errormsg = "Ha ocurrido un error, si el error persiste, contacte con soporte ;)";
+                            this.errormsg = $t('errorMsg');
+                    		this.loading = false;
                         }
-                        this.getSecciones();
                     });
                 }
             }

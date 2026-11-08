@@ -7,7 +7,7 @@
                         <v-row>
                             <v-col cols="12">
                                 <h1>
-                                    Administrar
+                                    {{ $t('admin') }}
                                 </h1>
                             </v-col>
                             <v-col cols="12">
@@ -16,8 +16,8 @@
                                     align-tabs="center"
                                     center-active
                                 >
-                                    <v-tab value="categorias">Categorias</v-tab>
-                                    <v-tab value="personal">Personal</v-tab>
+                                    <v-tab value="categorias">{{ $t('categories') }}</v-tab>
+                                    <v-tab value="personal">{{ $t('personal') }}</v-tab>
                                 </v-tabs>
                             </v-col>
                         </v-row>

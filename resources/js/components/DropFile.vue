@@ -12,8 +12,8 @@
                 :accept="accept"
             />
             <label :for="inputId" style="height: 100%;">
-                <div v-if="isDragging">Soltar para subir aquí</div>
-                <div v-else>Arrastre o <u class="file-label">click</u> para subir</div>
+                <div v-if="isDragging">{{ $t('drop') }}</div>
+                <div v-else>{{ $t('drag') }} <u class="file-label">click</u> {{ $t('upload') }}</div>
             </label>
             <div class="preview-container mt-4" v-if="files.length">
                 <div v-for="(item, index) in files" :key="item.file.name" class="preview-card main">

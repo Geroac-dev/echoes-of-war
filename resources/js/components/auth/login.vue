@@ -12,7 +12,7 @@
                         autofocus
                         type="user"
                         autocomplete="false"
-                        label="Usuario"
+                        :label="$t('user')"
                         v-on:keyup.enter="$refs.pass.focus()"
                     />
                 </v-col>
@@ -20,7 +20,7 @@
                     <v-text-field
                         v-model="pass"
                         ref="pass"
-                        label="Contraseña"
+                        :label="$t('pass')"
                         autocomplete="false"
                         @click:append-inner="show = !show"
                         :type="show ? 'text' : 'password'"
@@ -35,7 +35,7 @@
             <v-row>
                 <v-col cols="12">
                     <v-btn @click="login()" color="primary" class="mb-3 elevation-0 rounded-lg" block size="x-large" :loading="loading">
-                        Iniciar Sesión
+                        {{ $t('login') }}
                     </v-btn>
                 </v-col>
             </v-row>
