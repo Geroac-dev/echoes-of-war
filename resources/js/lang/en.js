@@ -6,6 +6,7 @@ export default {
     play: "Play Now",
     wiki: "Echoes of War Wiki",
     wikidata: "Check out information about characters, enemies, bosses, levels, story, and everything you need to know about the game.",
+    identity: "A third-person action-adventure game based on the story of Mateo Vargas, a former member of the Mexican Army’s Special Forces who, following years of service and confrontations with organized crime, develops PTSD. The video game aims to represent, in an interactive way, the consequences that violent and traumatic experiences can have on a person. In the case of Mateo, although he leaves his military life behind, memories of the conflicts continue to affect him years later. The central issue depicted is the difficulty of confronting and accepting traumatic experiences from the past. The video game seeks to convey that overcoming a difficult experience does not mean forgetting what happened, but rather learning to face it and move on with one's life.",
     download: "Download App",
     admin: "Manage",
     categories: "Categories",
@@ -32,6 +33,7 @@ export default {
     drag: "Drag or",
     upload: "to upload",
     errorMsg: "An error occurred. If the error persists, please contact support ;)",
+    loading: "Loading...",
     $vuetify: {
         open: 'Open',
         dataFooter: {

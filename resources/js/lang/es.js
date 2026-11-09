@@ -6,6 +6,7 @@ export default {
     play: "Jugar ahora",
     wiki: "Wiki de Echoes of War",
     wikidata:"Consulta información sobre los personajes, enemigos, jefes, niveles, historia y todo lo que necesitas saber del juego.",
+    identity: "Acción y aventura en tercera persona, basado en la historia de Mateo Vargas, un exintegrante de Fuerzas Especiales del Ejército Mexicano que, después de años de servicio y enfrentamientos contra el crimen organizado, desarrolla TEPT. El videojuego busca representar de manera interactiva las consecuencias que pueden dejar las experiencias violentas y traumáticas en una persona. En el caso de Mateo, aunque deja atrás su vida militar, los recuerdos de los enfrentamientos continúan afectándolo años después. La problemática principal que se representa es la dificultad de enfrentar y aceptar experiencias traumáticas del pasado. El videojuego busca transmitir que superar una experiencia difícil no significa olvidar lo ocurrido, sino aprender a enfrentarlo y continuar con la vida.",
     download: "Descargar App",
     admin: "Administrar",
     categories: "Categorias",
@@ -32,6 +33,7 @@ export default {
     drag: "Arrastre o",
     upload: "para subir",
     errorMsg: "Ha ocurrido un error, si el error persiste, contacte con soporte ;)",
+    loading: "Cargando...",
     $vuetify: {
         open: 'Abrir',
         dataFooter: {

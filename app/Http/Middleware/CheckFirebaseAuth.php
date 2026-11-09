@@ -10,12 +10,14 @@ class CheckFirebaseAuth
 {
     public function handle(Request $request, Closure $next): Response
     {
-        // Verificamos si existe nuestra sesión personalizada de Firebase
         if (!session()->has('firebase_user')) {
-            return response()->json([
-                'status' => '401',
-                'msg' => 'Unauthenticated.'
-            ], 401);
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'status' => '200',
+                    'msg' => 'Unauthenticated.'
+                ], 200);
+            }
+            return redirect('/');
         }
 
         return $next($request);

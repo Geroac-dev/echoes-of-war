@@ -50,7 +50,7 @@ class ViewController extends Controller
         return response()->json([
             'success' => true,
             'newScore' => $user['score'],
-            'message' => 'Puntuación actualizada correctamente'
+            'message' => '¡Puntuación guardada con éxito!'
         ]);
     }
 }

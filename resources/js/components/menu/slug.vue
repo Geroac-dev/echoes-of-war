@@ -7,11 +7,11 @@
 						<v-row>
 							<v-col cols="12">
 								<h1>
-									{{ contenido.nombre }}
+									{{ locale === 'en' ? contenido.name : contenido.nombre }}
 								</h1>
 							</v-col>
 							<v-col cols="12">
-								<span class="text-pre-wrap">{{ contenido.descripcion }}</span>
+								<span class="text-pre-wrap">{{ locale === 'en' ? contenido.description : contenido.descripcion }}</span>
 							</v-col>
 						</v-row>
 					</v-card-title>
@@ -22,11 +22,11 @@
 							<template v-for="seccion in izquierda" :key="seccion.id">
 								<v-col cols="12">
 									<h2>
-										{{ seccion.titulo }}
+										{{ locale === 'en' ? seccion.title : seccion.titulo }}
 									</h2>
 								</v-col>
 								<v-col cols="12" align="left">
-									<span class="text-pre-wrap">{{ seccion.texto }}</span>
+									<span class="text-pre-wrap">{{ locale === 'en' ? seccion.text : seccion.texto }}</span>
 								</v-col>
 								<v-col cols="12" v-if="seccion.imagenes.length > 0">
 									<v-slide-group
@@ -56,6 +56,12 @@
 					</v-card-title>
 				</v-card>
 			</v-col>
+			<v-progress-linear
+				v-if="loading"
+				color="primary"
+				indeterminate
+				label="Loading..."
+			/>
 			<v-col cols="12" md="5">
 				<v-card v-if="!!contenido.imagen">
 					<v-card-title>
@@ -68,11 +74,11 @@
 							<template v-for="seccion in derecha" :key="seccion.id">
 								<v-col cols="12">
 									<h2>
-										{{ seccion.titulo }}
+										{{ locale === 'en' ? seccion.title : seccion.titulo }}
 									</h2>
 								</v-col>
 								<v-col cols="12" align="left">
-									<span class="text-pre-wrap">{{ seccion.texto }}</span>
+									<span class="text-pre-wrap">{{ locale === 'en' ? seccion.text : seccion.texto }}</span>
 								</v-col>
 								<v-col cols="12" v-if="seccion.imagenes.length > 0">
 									<v-slide-group
@@ -109,11 +115,11 @@
 							<template v-for="seccion in centro" :key="seccion.id">
 								<v-col cols="12">
 									<h2>
-										{{ seccion.titulo }}
+										{{ locale === 'en' ? seccion.title : seccion.titulo }}
 									</h2>
 								</v-col>
 								<v-col cols="12" align="left">
-									<span class="text-pre-wrap">{{ seccion.texto }}</span>
+									<span class="text-pre-wrap">{{ locale === 'en' ? seccion.text : seccion.texto }}</span>
 								</v-col>
 								<v-col cols="12" v-if="seccion.imagenes.length > 0">
 									<v-slide-group
@@ -147,7 +153,7 @@
 		<v-dialog v-model="imagenDialog">
             <v-card>
                 <v-card-title align="center" class="bg-primary">
-                        Imagen
+                        {{ $t('image') }}
                         <br v-if="mdAndDown">
                         <v-btn icon="mdi-close" variant="text" @click="imagenDialog=false" />
                 </v-card-title>
@@ -163,11 +169,15 @@
 	</v-layout>
 </template>
 <script>
-import { mapState } from "vuex";
+import { useI18n } from 'vue-i18n';
 export default {
 	mounted() {
         this.slug = this.$route.params.slug;
 		this.getContenido();
+	},
+	setup() {
+		const { locale } = useI18n();
+		return { locale };
 	},
 	data() {
 		return {
@@ -190,10 +200,9 @@ export default {
 			}).then(({ data }) => {
                 if (data.status == 200) {
                     this.contenido = data.contenido;
-					document.title = this.contenido.nombre;
+					document.title = this.locale === 'en' ? this.contenido.name : this.contenido.nombre;
 					this.getSecciones();
                 }
-                this.loading = false;
             });
 		},
 		getSecciones() {

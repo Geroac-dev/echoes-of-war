@@ -37,7 +37,8 @@ class LoginController extends Controller
                     'name' => $foundUser['nombreUsuario'] ?? ($foundUser['name'] ?? ''),
                     'user' => $foundUser['user'],
                     'email' => $foundUser['correo'] ?? ($foundUser['email'] ?? ''),
-                    'dark_mode' => (int)($foundUser['dark_mode'] ?? 0)
+                    'dark_mode' => (bool)($foundUser['dark_mode'] ?? false),
+                    'score' => (int)($foundUser['score'] ?? 0),
                 ]
             ]);
 

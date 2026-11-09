@@ -415,16 +415,20 @@ export default {
             imagen: null,
             categorias: [],
             headers: [
-                { title: this.$t('name'), key: 'nombre'},
-                { title: this.$t('desc'), key: 'descripcion'},
-                { title: this.$t('actions'), key: 'actions'}
+                { title: 'Nombre', key: 'nombre'},
+                { title: 'Name', key: 'name'},
+                { title: 'Descripcion', key: 'descripcion'},
+                { title: 'Description', key: 'description'},
+                { title: 'actions', key: 'actions'}
             ],
             headersContenidos: [
-                { title: this.$t('name'), key: 'nombre'},
-                { title: this.$t('desc'), key: 'descripcion'},
+                { title: 'Name', key: 'name'},
+                { title: 'Nombre', key: 'nombre'},
+                { title: 'Descripcion', key: 'descripcion'},
+                { title: 'Description', key: 'description'},
                 { title: 'Slug', key: 'slug'},
-                { title: this.$t('image'), key: 'imagen'},
-                { title: this.$t('actions'), key: 'actions'}
+                { title: 'image', key: 'imagen'},
+                { title: 'actions', key: 'actions'}
             ],
             selectedcategoria: {},
             selectedcontenido: {},
@@ -448,6 +452,7 @@ export default {
         },
         showAddContenidoDialog(item) {
             this.selectedcategoria = item;
+            this.selectedcontenido = {};
             this.addContenidoDialog = true;
         },
         showEditDialog(item) {
@@ -465,16 +470,16 @@ export default {
         savecategoria() {
             if (!this.loading) {
                 this.loading = true;
-                if (!this.selectedcategoria.nombre) {
-                    this.errormsg = $t('fillField')+"nombre.";
+                if (!this.selectedcategoria.nombre || !this.selectedcategoria.name) {
+                    this.errormsg = this.$t('fillField')+"nombre.";
                     this.$refs.name.focus();
                     this.loading = false;
-                } else if (!this.selectedcategoria.descripcion) {
-                    this.errormsg = $t('fillField')+"descripcion.";
+                } else if (!this.selectedcategoria.descripcion || !this.selectedcategoria.description) {
+                    this.errormsg = this.$t('fillField')+"descripcion.";
                     this.$refs.descripcion.focus();
                     this.loading = false;
                 } else if (!this.selectedcategoria.orden) {
-                    this.errormsg = $t('fillField')+"orden.";
+                    this.errormsg = this.$t('fillField')+"orden.";
                     this.$refs.orden.focus();
                     this.loading = false;
                 } else {
@@ -514,20 +519,20 @@ export default {
         saveContenido() {
             if (!this.loading) {
                 this.loading = true;
-                if (!this.selectedcontenido.nombre) {
-                    this.errormsg = $t('fillField')+"nombre.";
+                if (!this.selectedcontenido.nombre || !this.selectedcontenido.name) {
+                    this.errormsg = this.$t('fillField')+"nombre.";
                     this.$refs.name.focus();
                     this.loading = false;
-                } else if (!this.selectedcontenido.descripcion) {
-                    this.errormsg = $t('fillField')+"descripcion.";
+                } else if (!this.selectedcontenido.descripcion || !this.selectedcontenido.description) {
+                    this.errormsg = this.$t('fillField')+"descripcion.";
                     this.$refs.descripcion.focus();
                     this.loading = false;
                 } else if (!this.selectedcontenido.orden) {
-                    this.errormsg = $t('fillField')+"orden.";
+                    this.errormsg = this.$t('fillField')+"orden.";
                     this.$refs.orden.focus();
                     this.loading = false;
                 } else if (!this.selectedcontenido.slug) {
-                    this.errormsg = $t('fillField')+"slug.";
+                    this.errormsg = this.$t('fillField')+"slug.";
                     this.$refs.slug.focus();
                     this.loading = false;
                 } else {
@@ -544,7 +549,9 @@ export default {
                     formData.append('id', id);
                     formData.append('categoria_id', this.selectedcategoria.id);
                     formData.append('nombre', this.selectedcontenido.nombre);
+                    formData.append('name', this.selectedcontenido.name);
                     formData.append('descripcion', this.selectedcontenido.descripcion);
+                    formData.append('description', this.selectedcontenido.description);
                     formData.append('orden', this.selectedcontenido.orden);
                     formData.append('slug', this.selectedcontenido.slug);
                     if (!!this.file) {

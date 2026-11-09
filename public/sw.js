@@ -5,7 +5,7 @@ const ARCHIVOS_INICIALES = [
     '/offline.html',
     '/manifest.webmanifest',
     '/images/logo.png',
-    '/images/ECHOS OF WAR.png',
+    '/images/ECHOS-OF-WAR.png',
 ];
 // 1. Instalar y guardar los archivos iniciales
 self.addEventListener('install', (event) => {

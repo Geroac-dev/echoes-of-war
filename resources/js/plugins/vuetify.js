@@ -38,7 +38,7 @@ export default function (i18n) {
                 dark: {
                     dark: true,
                     colors: {
-                        primary: '#e9e9e9ff',
+                        primary: 'rgb(133, 133, 133)',
                         background: '#3d3d3dff',
                         error: '#8F1320',
                         info: '#337B80',

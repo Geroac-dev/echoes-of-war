@@ -95,15 +95,15 @@
 <script>
     import { mapState } from "vuex";
     import { useDisplay } from 'vuetify';
-    import { useTheme } from 'vuetify';
     import { useI18n } from 'vue-i18n';
-    import { ref, onMounted } from 'vue';
+    import { ref } from 'vue';
 
     export default {
         setup() {
             const { mdAndDown } = useDisplay();
             const { locale } = useI18n();
             
+            // Idioma
             const idiomaGuardado = localStorage.getItem('idioma');
             if (idiomaGuardado) {
                 locale.value = idiomaGuardado;
@@ -114,12 +114,11 @@
         },
         mounted() {
             this.$store.dispatch("users/setUser");
-            this.theme = useTheme();
             this.getCategorias();
         },
         data: () => ({
             darkMode: false,
-            theme: null,
+            isInitializing: true,
             drawer: false,
             admin: [],
             categorias: [],
@@ -140,7 +139,6 @@
                     if (data.status == 200) {
                         this.categorias = data.categorias;
                     }
-                    this.loading = false;
                 });
             },
             cambiarIdioma() {
@@ -150,21 +148,33 @@
         },
         watch: {
             darkMode(val) {
-                if (this.theme) {
-                    if (val) {
-                        this.theme.change('dark');
-                    } else {
-                        this.theme.change('light');
-                    }
-                    if (!!this.user) {
-                        axios.post("/change-theme", { theme: val });
-                    }
+                if (this.isInitializing) return;
+
+                const themeInstance = this.$vuetify ? this.$vuetify.theme : null;
+                if (themeInstance) {
+                    themeInstance.change(val ? 'dark' : 'light');
+                }
+
+                if (!!this.user) {
+                    axios.post("/change-theme", { theme: val });
                 }
             },
             user(val) {
                 if (!!val) {
-                    this.darkMode = !!val.dark_mode;
-                    this.getCategorias();
+                    this.isInitializing = true;
+                    
+                    const isDark = val.dark_mode === true || val.dark_mode === 'true' || val.dark_mode === 1;
+                    
+                    this.darkMode = isDark;
+                    
+                    const themeInstance = this.$vuetify ? this.$vuetify.theme : null;
+                    if (themeInstance) {
+                        themeInstance.change(isDark ? 'dark' : 'light');
+                    }
+
+                    this.$nextTick(() => {
+                        this.isInitializing = false;
+                    });
                 }
             }
         },

@@ -26,6 +26,12 @@
 									{{ $t('add') }} {{ $t('sections') }}
 								</v-btn>
 							</v-col>
+							<v-progress-linear
+								v-if="loading"
+								color="primary"
+								indeterminate
+								label="Loading..."
+							/>
 							<template v-for="seccion in izquierda" :key="seccion.id">
 								<v-col cols="12" md="6">
 									<h2>
@@ -82,6 +88,12 @@
 									{{ $t('add') }} {{ $t('sections') }} 
 								</v-btn>
 							</v-col>
+							<v-progress-linear
+								v-if="loading"
+								color="primary"
+								indeterminate
+								label="Loading..."
+							/>
 							<template v-for="seccion in derecha" :key="seccion.id">
 								<v-col cols="12" md="6">
 									<h2>
@@ -133,6 +145,12 @@
 									{{ $t('add') }} {{ $t('sections') }} 
 								</v-btn>
 							</v-col>
+							<v-progress-linear
+								v-if="loading"
+								color="primary"
+								indeterminate
+								label="Loading..."
+							/>
 							<template v-for="seccion in centro" :key="seccion.id">
 								<v-col cols="12" md="6">
 									<h2>
@@ -179,8 +197,9 @@
 		<v-dialog persistent v-model="addSeccionDialog" max-width="900">
             <v-card>
                 <v-card-title align="center" class="bg-primary">
-                        {{ !selectedseccion.id ? $t('add') : $t('edit') }} sección
+                        {{ !selectedseccion.id ? $t('add') : $t('edit') }} {{ $t('sections') }}
                         <v-btn icon="mdi-close" variant="text" @click="addSeccionDialog=false" />
+                        <v-btn icon="mdi-trash-can-outline" variant="text" @click="deleteSeccion()" v-if="!!selectedseccion.id" />
                 </v-card-title>
                 <v-card-text>
                     <v-row>
@@ -200,7 +219,7 @@
                                 prepend-inner-icon="mdi-text-short"
                             />
                         </v-col>
-                        <v-col cols="12" align="center">
+                        <v-col cols="6" align="center">
                             <v-textarea
                                 ref="texto"
                                 v-model="selectedseccion.texto"
@@ -208,7 +227,7 @@
                                 prepend-inner-icon="mdi-text"
                             />
                         </v-col>
-						<v-col cols="12" align="center">
+						<v-col cols="6" align="center">
                             <v-textarea
                                 ref="text"
                                 v-model="selectedseccion.text"
@@ -220,7 +239,7 @@
                             <v-text-field
                                 ref="orden"
                                 v-model="selectedseccion.orden"
-                                label="Orden"
+                                :label="$t('order')"
                                 type="number"
                                 prepend-inner-icon="mdi-filter-variant"
                             />
@@ -236,7 +255,7 @@
                         <v-col cols="12" align="center">
                             <v-btn color="primary" @click="saveSeccion()" block size="x-large">
                                 <template v-if="loading">
-                                    <v-progress-circular
+                                    <v-progress-linear-circular
                                         indeterminate
                                     />
                                 </template>
@@ -268,10 +287,15 @@
 	</v-layout>
 </template>
 <script>
+import { useI18n } from 'vue-i18n';
 export default {
 	props: ["contenido"],
 	mounted() {
 		this.getSecciones();
+	},
+	setup() {
+		const { locale } = useI18n();
+		return { locale };
 	},
 	data() {
 		return {
@@ -305,21 +329,22 @@ export default {
 		},
 		addSeccion(val) {
 			this.posicion = val;
+			this.selectedseccion = {};
 			this.addSeccionDialog = true;
 		},
 		saveSeccion() {
             if (!this.loading) {
                 this.loading = true;
-                if (!this.selectedseccion.titulo) {
-                    this.errormsg = $t('fillField')+"titulo.";
+                if (!this.selectedseccion.titulo || !this.selectedseccion.title) {
+                    this.errormsg = this.$t('fillField')+"titulo.";
                     this.$refs.titulo.focus();
                     this.loading = false;
-                } else if (!this.selectedseccion.texto) {
-                    this.errormsg = $t('fillField')+"texto.";
+                } else if (!this.selectedseccion.texto || !this.selectedseccion.text) {
+                    this.errormsg = this.$t('fillField')+"texto.";
                     this.$refs.texto.focus();
                     this.loading = false;
                 } else if (!this.selectedseccion.orden) {
-                    this.errormsg = $t('fillField')+"orden.";
+                    this.errormsg = this.$t('fillField')+"orden.";
                     this.$refs.orden.focus();
                     this.loading = false;
 				} else {
@@ -336,7 +361,9 @@ export default {
 					}
                     formData.append('id', id);
                     formData.append('titulo', this.selectedseccion.titulo);
+                    formData.append('title', this.selectedseccion.title);
                     formData.append('texto', this.selectedseccion.texto);
+                    formData.append('text', this.selectedseccion.text);
                     formData.append('orden', this.selectedseccion.orden);
                     formData.append('contenido_id', this.contenido.id);
                     if (!!this.files) {
@@ -362,6 +389,24 @@ export default {
                 }
             }
 		},
+		deleteSeccion() {
+            if (!this.loading) {
+                this.loading = true;
+                axios.post("/delete-seccion", {
+                    id: this.selectedseccion.id,
+                }).then(({ data }) => {
+                    if (data.status == 200) {
+                        this.$store.dispatch("snackbar/setSnackbar", {text: data.msg, color: data.color});
+						this.addSeccionDialog = false;
+						this.getSecciones();
+                    } else {
+                        this.errormsg = $t('errorMsg');
+                        this.loading = false;
+                    }
+                });
+                
+            }
+        },
 		editarSeccion(seccion) {
 			this.selectedseccion = seccion;
 			this.addSeccionDialog = true;

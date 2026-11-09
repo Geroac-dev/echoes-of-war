@@ -76,22 +76,26 @@ trait FirestoreTrait
     public function fbUpdate($collection, $id, array $data)
     {
         $fields = [];
-        $updateMask = [];
+        $updateMaskQuery = "";
 
         foreach ($data as $key => $value) {
             if (is_int($value)) {
                 $fields[$key] = ['integerValue' => (string)$value];
+            } elseif (is_bool($value)) {
+                $fields[$key] = ['booleanValue' => $value];
             } else {
                 $fields[$key] = ['stringValue' => (string)($value ?? '')];
             }
-            $updateMask[] = "fieldPaths=" . $key;
+            
+            $updateMaskQuery .= "&updateMask.fieldPaths=" . $key;
         }
 
-        $baseUrl = "{$this->getBaseUrl($collection)}/{$id}";
-        
-        $url = $baseUrl . '?' . implode('&', $updateMask);
+        $updateMaskQuery = '?' . ltrim($updateMaskQuery, '&');
 
-        $response = Http::patch($url, ['fields' => $fields]);
+        $baseUrl = "{$this->getBaseUrl($collection)}/{$id}" . $updateMaskQuery;
+
+        $response = Http::patch($baseUrl, ['fields' => $fields]);
+
         return $response->successful();
     }
 

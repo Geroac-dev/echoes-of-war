@@ -214,19 +214,19 @@ export default {
             if (!this.loading) {
                 this.loading = true;
                 if (!this.selectedPersonal.name) {
-                    this.errormsg = $t('fillField')+"nombre.";
+                    this.errormsg = this.$t('fillField')+"nombre.";
                     this.$refs.name.focus();
                     this.loading = false;
                 } else if (!this.selectedPersonal.user) {
-                    this.errormsg = $t('fillField')+"usuario.";
+                    this.errormsg = this.$t('fillField')+"usuario.";
                     this.$refs.user.focus();
                     this.loading = false;
                 } else if (!this.selectedPersonal.id && !this.pass) {
-                    this.errormsg = $t('fillField')+"contraseña.";
+                    this.errormsg = this.$t('fillField')+"contraseña.";
                     this.$refs.name.focus();
                     this.loading = false;
                 } else if (!this.selectedPersonal.email) {
-                    this.errormsg = $t('fillField')+"email.";
+                    this.errormsg = this.$t('fillField')+"email.";
                     this.$refs.email.focus();
                     this.loading = false;
                 } else {

@@ -16,7 +16,7 @@ class UserController extends Controller
             $user = session('firebase_user');
             
             if (!$user) {
-                return response()->json(['status' => '401', 'msg' => 'Unauthenticated.'], 401);
+                return response()->json(['status' => '200', 'msg' => 'Unauthenticated.'], 200);
             }
 
             return response()->json(['status' => '200', 'user' => $user]);
@@ -24,7 +24,6 @@ class UserController extends Controller
             return response()->json(['status' => "500", 'data' => $e->getMessage()]);
         }
     }
-
     public function getUsers()
     {
         try {
@@ -34,7 +33,6 @@ class UserController extends Controller
             return response()->json(['status' => "500", 'data' => $e->getMessage()]);
         }
     }
-
     public function saveUser(Request $request)
     {
         try {
@@ -59,7 +57,6 @@ class UserController extends Controller
             return response()->json(['status' => "500", 'data' => $e->getMessage()]);
         }
     }
-
     public function editUser(Request $request)
     {
         try {
@@ -81,7 +78,6 @@ class UserController extends Controller
             return response()->json(['status' => "500", 'data' => $e->getMessage()]);
         }
     }
-
     public function deleteUser(Request $request)
     {
         try {
@@ -98,7 +94,6 @@ class UserController extends Controller
             return response()->json(['status' => "500", 'data' => $e->getMessage()]);
         }
     }
-
     public function changeTheme(Request $request)
     {
         try {
@@ -110,9 +105,13 @@ class UserController extends Controller
             $userId = $currentUser['id'];
             $theme = $request->input("theme");
 
+            $isDark = filter_var($theme, FILTER_VALIDATE_BOOLEAN);
+
             $this->fbUpdate('users', $userId, [
-                "dark_mode" => $theme
+                "dark_mode" => $isDark
             ]);
+
+            session(['firebase_user.dark_mode' => $isDark]);
 
             return response()->json(['status' => '200']);
         } catch (\Exception $e) {

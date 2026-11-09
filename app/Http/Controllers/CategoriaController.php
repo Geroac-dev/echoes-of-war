@@ -213,4 +213,44 @@ class CategoriaController extends Controller
             return response()->json(['status' => "500", 'data' => $e->getMessage()]);
         }
     }
+    public function editSeccion(Request $request)
+    {
+        try {
+            $id = $request->input("id");
+            
+            $data = [
+                "contenido_id" => $request->input("contenido_id"),
+                "titulo" => $request->input("titulo"),
+                "title" => $request->input("title"),
+                "texto" => $request->input("texto"),
+                "text" => $request->input("text"),
+                "posicion" => (int) $request->input("posicion"),
+                "orden" => (int) $request->input("orden"),
+            ];
+
+            if ($files = $request->file('files')) {
+                foreach($files as $file){
+                    $imagenPath = $file->store('secciones', 'public');
+                    $this->fbCreate('imagenes', [
+                        'seccion_id' => $id,
+                        'ruta' => $imagenPath,
+                    ]);
+                }
+            }
+
+            $this->fbUpdate('secciones', $id, $data);
+            return response()->json(['status' => '200']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => "500", 'data' => $e->getMessage()]);
+        }
+    }
+    public function deleteSeccion(Request $request)
+    {
+        try {
+            $this->fbDelete('secciones', $request->input("id"));
+            return response()->json(['status' => '200']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => "500", 'data' => $e->getMessage()]);
+        }
+    }
 }

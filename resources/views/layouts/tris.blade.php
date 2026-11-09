@@ -2,24 +2,24 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <style>
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      overflow: hidden;
-      touch-action: manipulation;
-      user-select: none;
-    }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<style>
+		html,
+		body {
+			height: 100%;
+			margin: 0;
+			overflow: hidden;
+			touch-action: manipulation;
+			user-select: none;
+		}
 
-    body {
-      background: black;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: Arial, sans-serif;
+		body {
+			background: black;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: Arial, sans-serif;
 			padding: 20px;
 			box-sizing: border-box;
 		}
@@ -588,13 +588,9 @@
 			})
 				.then(response => response.json())
 				.then(data => {
-					if (data.success) {
-						alert('¡Puntuación guardada con éxito!');
-						updatePB(data.newScore);
-						loadScores();
-					} else {
-						alert('Error al guardar la puntuación: ' + data.message);
-					}
+					alert(data.message);
+					updatePB(data.newScore);
+					loadScores();
 				})
 				.catch(error => {
 					console.error('Error:', error);

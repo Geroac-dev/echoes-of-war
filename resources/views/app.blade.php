@@ -18,6 +18,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="EchoesOfWar">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('images/logo.png') }}">
     <link rel="apple-touch-icon" href="{{asset('images/logo.png')}}">
     <style>
         body {
@@ -92,7 +93,7 @@
         z-index:9999;
         flex-direction: column;
     ">
-        <img src="/images/ECHOS OF WAR.png" style="width: min(80vw, 500px); height: auto; margin-bottom: 20px;">
+        <img src="/images/ECHOS-OF-WAR.png" style="width: min(80vw, 500px); height: auto; margin-bottom: 20px;">
         <div class="loader"></div>
     </div>
     <div id="app">
@@ -117,6 +118,8 @@
                         console.error('Error al registrar el service worker:', error);
                     });
             });
+        } else {
+            console.error('service worker no en navigator');
         }
     </script>
 </body>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ViewController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 
@@ -11,8 +12,9 @@ Route::get('/',                     function () { return view('app'); })->name('
 Route::get('/csrf-reload',          function () { return response()->json(['csrfToken' => csrf_token()]); });
 Route::get('/iniciar-sesion',       function () { return view('app'); });
 Route::get('/ver/{slug}',           function () { return view('app'); });
-Route::get('/tris',                 function () { return view('layouts.tris'); });
 Route::get('/administrar',          function () { return view('app'); })->middleware('firebase.auth');
+Route::get('/tris',                 [ViewController::class, 'tris']);
+Route::post('/update-score',        [ViewController::class, 'store']);
 
 //Login-----------------------------------------------------------------------------------
 Route::post('/login',               [LoginController::class, 'authenticate']);
@@ -38,6 +40,7 @@ Route::post("/delete-contenido",    [CategoriaController::class, 'deleteContenid
 Route::post("/get-secciones",       [CategoriaController::class, 'getSecciones']);
 Route::post("/save-seccion",        [CategoriaController::class, 'saveSeccion'])->middleware('firebase.auth');
 Route::post("/edit-seccion",        [CategoriaController::class, 'editSeccion'])->middleware('firebase.auth');
+Route::post("/delete-seccion",      [CategoriaController::class, 'deleteSeccion'])->middleware('firebase.auth');
 
 //Rutas Invalidas-----------------------------------------------------------------------------------
-Route::fallback(            function (): RedirectResponse { return redirect('/'); });
+Route::fallback( function (): RedirectResponse { return redirect('/'); });
