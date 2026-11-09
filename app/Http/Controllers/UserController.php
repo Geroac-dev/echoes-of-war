@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use App\Traits\FirestoreTrait;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -39,7 +38,6 @@ class UserController extends Controller
     public function saveUser(Request $request)
     {
         try {
-            // Verificamos si ya existe el nombre de usuario en Firebase
             $users = $this->fbGet('users');
             foreach ($users as $u) {
                 if (isset($u['user']) && $u['user'] === $request->input("user")) {
@@ -52,7 +50,8 @@ class UserController extends Controller
                 "user" => $request->input("user"),
                 "email" => $request->input("email"),
                 "password" => Hash::make($request->input("pass")),
-                "dark_mode" => 0 // Valor por defecto
+                "dark_mode" => 0,
+                "score" => 0,
             ]);
 
             return response()->json(['status' => '200']);
@@ -72,7 +71,6 @@ class UserController extends Controller
                 "email" => $request->input("email"),
             ];
 
-            // Si mandó contraseña nueva, la encriptamos y la actualizamos
             if ($request->input("pass") != null) {
                 $data["password"] = Hash::make($request->input("pass"));
             }

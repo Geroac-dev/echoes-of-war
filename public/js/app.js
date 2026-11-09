@@ -32657,12 +32657,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+            onClick: _cache[0] || (_cache[0] = function ($event) {
+              return $options.easter();
+            }),
             src: "/images/ECHOS OF WAR.png",
             style: {
               "max-width": "500px"
             },
             draggable: false,
-            onContextmenu: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["prevent"]))
+            onContextmenu: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["prevent"]))
           }, null, 32 /* NEED_HYDRATION */)];
         }),
         _: 1 /* STABLE */
@@ -32677,14 +32680,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                   return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_text_field, {
                     ref: "user",
                     modelValue: $data.user,
-                    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+                    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
                       return $data.user = $event;
                     }),
                     autofocus: "",
                     type: "user",
                     autocomplete: "false",
                     label: _ctx.$t('user'),
-                    onKeyup: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function ($event) {
+                    onKeyup: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function ($event) {
                       return _ctx.$refs.pass.focus();
                     }, ["enter"]))
                   }, null, 8 /* PROPS */, ["modelValue", "label"])];
@@ -32696,18 +32699,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                 "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
                   return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_text_field, {
                     modelValue: $data.pass,
-                    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+                    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
                       return $data.pass = $event;
                     }),
                     ref: "pass",
                     label: _ctx.$t('pass'),
                     autocomplete: "false",
-                    "onClick:appendInner": _cache[4] || (_cache[4] = function ($event) {
+                    "onClick:appendInner": _cache[5] || (_cache[5] = function ($event) {
                       return $data.show = !$data.show;
                     }),
                     type: $data.show ? 'text' : 'password',
                     "append-inner-icon": $data.show ? 'mdi-eye' : 'mdi-eye-off',
-                    onKeyup: _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function ($event) {
+                    onKeyup: _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function ($event) {
                       return $options.login();
                     }, ["enter"]))
                   }, null, 8 /* PROPS */, ["modelValue", "label", "type", "append-inner-icon"])];
@@ -32732,7 +32735,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               }, {
                 "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
                   return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_btn, {
-                    onClick: _cache[6] || (_cache[6] = function ($event) {
+                    onClick: _cache[7] || (_cache[7] = function ($event) {
                       return $options.login();
                     }),
                     color: "primary",

@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\FirestoreTrait;
-use App\Models\CustomFirebaseUser; // O un objeto usuario simulado para la sesión
-use App\Models\User;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -34,7 +31,6 @@ class LoginController extends Controller
 
         if ($foundUser && Hash::check($credentials['password'], $passHash)) {
             
-            // Guardamos los datos directamente en la sesión de Laravel
             session([
                 'firebase_user' => [
                     'id' => $foundUser['id'],

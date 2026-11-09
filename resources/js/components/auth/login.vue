@@ -1,7 +1,7 @@
 <template>
     <v-card class="elevation-0 pa-3 mt-5 mx-auto" max-width="500px">
         <v-card-title class="flex-column d-flex justify-center align-center">
-            <img src="/images/ECHOS OF WAR.png" style="max-width: 500px;" :draggable="false" @contextmenu.prevent>
+            <img @click="easter()" src="/images/ECHOS OF WAR.png" style="max-width: 500px;" :draggable="false" @contextmenu.prevent>
         </v-card-title>
         <v-card-text>
             <v-row>

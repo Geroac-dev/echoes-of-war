@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\Request;
 use App\Traits\FirestoreTrait;
+use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
 {
@@ -13,14 +12,11 @@ class CategoriaController extends Controller
     public function getCategorias()
     {
         try {
-            // Traemos las categorías y los contenidos para simular el ->with('contenidos')
             $categorias = $this->fbGet('categorias');
             $contenidos = $this->fbGet('contenidos');
 
-            // Ordenar por 'orden' ASC en PHP
             usort($categorias, fn($a, $b) => ($a['orden'] ?? 0) <=> ($b['orden'] ?? 0));
 
-            // Simulamos la relación with('contenidos') anidándolos manualmente
             foreach ($categorias as &$cat) {
                 $cat['contenidos'] = array_values(array_filter($contenidos, fn($c) => ($c['categoria_id'] ?? null) === $cat['id']));
             }
@@ -51,7 +47,6 @@ class CategoriaController extends Controller
     {
         try {
             $id = $request->input("id");
-            // Para editar en Firestore vía API REST, hacemos un PATCH o recreamos el documento
             $this->fbUpdate('categorias', $id, [
                 "nombre" => $request->input("nombre"),
                 "name" => $request->input("name"),
@@ -134,7 +129,6 @@ class CategoriaController extends Controller
             ];
 
             if ($request->hasFile('file')) {
-                // Opcional: manejar borrado de imagen anterior si gustas
                 $data["imagen"] = $request->file('file')->store('contenidos', 'public');
             }
 
@@ -162,7 +156,6 @@ class CategoriaController extends Controller
             $secciones = $this->fbGet('secciones');
             $imagenes = $this->fbGet('imagenes');
 
-            // Filtramos por contenido_id
             $filtradas = array_values(array_filter($secciones, fn($s) => ($s['contenido_id'] ?? null) === $contenidoId));
 
             $izquierda = [];
@@ -170,7 +163,6 @@ class CategoriaController extends Controller
             $centro = [];
 
             foreach ($filtradas as $sec) {
-                // Adjuntar imágenes asociadas a esta sección
                 $sec['imagenes'] = array_values(array_filter($imagenes, fn($img) => ($img['seccion_id'] ?? null) === $sec['id']));
 
                 if (($sec['posicion'] ?? 0) == 1) $izquierda[] = $sec;
@@ -178,7 +170,6 @@ class CategoriaController extends Controller
                 elseif (($sec['posicion'] ?? 0) == 3) $centro[] = $sec;
             }
 
-            // Ordenar cada posición por orden ASC
             usort($izquierda, fn($a, $b) => ($a['orden'] ?? 0) <=> ($b['orden'] ?? 0));
             usort($derecha, fn($a, $b) => ($a['orden'] ?? 0) <=> ($b['orden'] ?? 0));
             usort($centro, fn($a, $b) => ($a['orden'] ?? 0) <=> ($b['orden'] ?? 0));
@@ -197,9 +188,6 @@ class CategoriaController extends Controller
     public function saveSeccion(Request $request)
     {
         try {
-            // Guardamos la sección y obtenemos su ID simulado de Firestore
-            // (Nota: fbCreate necesita devolver el ID generado si guardas imágenes asociadas)
-            // Aquí puedes ajustar tu Trait para que fbCreate regrese el ID del documento creado.
             $seccionId = $this->fbCreateWithId('secciones', [
                 "contenido_id" => $request->input("contenido_id"),
                 "titulo" => $request->input("titulo"),
